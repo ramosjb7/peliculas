@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:peliculas/models/movie.dart';
 
 class MoviSlider extends StatelessWidget {
-  const MoviSlider({ Key? key }) : super(key: key);
+  const MoviSlider({ Key? key, required this.movies, this.title }) : super(key: key);
+
+  final List<Movie> movies;
+  final String? title;
 
   @override
   Widget build(BuildContext context) {
@@ -13,11 +17,12 @@ class MoviSlider extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children:  [
 
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20),
+          if(title != null)
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Text(
-              'Populares',
-              style: TextStyle(
+              title!,
+              style: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold
               ),
@@ -28,8 +33,8 @@ class MoviSlider extends StatelessWidget {
           Expanded(
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: 20,
-              itemBuilder: (_, int index) => const _MoviePoster()
+              itemCount: movies.length,
+              itemBuilder: (_, int index) => _MoviePoster(movies[index])
             ),
           )
 
@@ -41,7 +46,10 @@ class MoviSlider extends StatelessWidget {
 }
 
 class _MoviePoster extends StatelessWidget {
-  const _MoviePoster({ Key? key }) : super(key: key);
+  final Movie movie;
+
+  const _MoviePoster( this.movie );
+
 
   @override
   Widget build(BuildContext context) {
@@ -56,9 +64,9 @@ class _MoviePoster extends StatelessWidget {
             onTap: () => Navigator.pushNamed(context, 'details', arguments: 'movie-'),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20),
-              child: const FadeInImage(
-                placeholder: AssetImage('assets/no-image.jpg'), 
-                image: NetworkImage('https://via.placeholder.com/300x400'),
+              child: FadeInImage(
+                placeholder: const  AssetImage('assets/no-image.jpg'), 
+                image: NetworkImage(movie.fullPosterImg),
                 width: 130,
                 height: 190,
                 fit: BoxFit.cover,
@@ -67,8 +75,8 @@ class _MoviePoster extends StatelessWidget {
           ),
           const SizedBox(height: 5,),
 
-          const Text(
-            'Starwas: El retormo del el nuevo Jedi silvestre de Monte Cristo',
+          Text(
+            movie.title,
             overflow: TextOverflow.ellipsis,
             maxLines: 2,
             textAlign: TextAlign.center,

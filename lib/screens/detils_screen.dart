@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:peliculas/witgets/witgets.dart';
 
 
 class DetailsScreen extends StatelessWidget {
@@ -10,13 +11,22 @@ class DetailsScreen extends StatelessWidget {
     //TODO cambiar luego por una instancia de movie
     final String movie = ModalRoute.of(context)?.settings.arguments.toString() ?? 'no-movie';
 
+    
+
     return Scaffold(
       body: CustomScrollView(
         slivers: [
           const _CustomAppBar(),
           SliverList(
             delegate: SliverChildListDelegate([
-              const _PosterAndTitle()
+              const _PosterAndTitle(),
+              const _OverView(),
+              const _OverView(),
+              const _OverView(),
+              const _OverView(),
+              const _OverView(),
+              const _OverView(),
+              const CastingCards()
             ]),
           )
         ],
@@ -42,6 +52,7 @@ class _CustomAppBar extends StatelessWidget {
         title: Container(
           width: double.infinity,
           alignment: Alignment.bottomCenter,
+          padding: const EdgeInsets.only(bottom: 10),
           color: Colors.black12,
           child: const Text(
             'movie-title',
@@ -124,5 +135,26 @@ class _PosterAndTitle extends StatelessWidget {
     );
   }
 }
+
+
+class _OverView extends StatelessWidget {
+  const _OverView({ Key? key }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+      child: Text(
+        'lorem asdasfdskmfas skafncf aeñofk asdc',
+        textAlign: TextAlign.justify,
+        style: Theme.of(context).textTheme.headline5,
+      ),
+    );
+  }
+}
+
+
+
+
 
 
