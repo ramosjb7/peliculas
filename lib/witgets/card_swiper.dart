@@ -3,16 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:peliculas/models/movie.dart';
 
 class CardSwiper extends StatelessWidget {
+  final List<Movie> movies; 
+
   const CardSwiper({ Key? key, required this.movies }) : super(key: key);
 
-  final List<Movie> movies; 
 
   @override
   Widget build(BuildContext context) {
 
     final size = MediaQuery.of(context).size;
 
-    if( movies.length == 0 ){
+    if( movies.isEmpty){
       return Container(
         padding: const EdgeInsets.all(0),
         width: double.infinity,
@@ -38,7 +39,7 @@ class CardSwiper extends StatelessWidget {
 
 
           return GestureDetector(
-            onTap: ()=> Navigator.pushNamed(context, 'details', arguments: 'movie-instance'),
+            onTap: ()=> Navigator.pushNamed(context, 'details', arguments: movie),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20),
               child: FadeInImage(
